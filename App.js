@@ -2,20 +2,20 @@ const express = require('express');
 const cors = require("cors");
 const app = express();
 
-const connection = require('./src/database/index');
+app.use(express.json());
+
 
 const { postSignUp, postSignIn } = require('./src/controllers/usersController');
 const authMiddleware = require('./src/middlewares/authMiddleware');
+const { getFinances } = require('./src/controllers/financesController');
 
 app.use(cors());
 
 // Sign routes
-app.post("/mywallet/sign-up", postSignUp);
-app.post("/mywallet/sign-in", postSignIn);
+app.post("/api/sign-up", postSignUp);
+app.post("/api/sign-in", postSignIn);
 
+// Finances routes
+app.get("/api/finances", getFinances)
 
-const port = 3000;
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+module.exports = app;

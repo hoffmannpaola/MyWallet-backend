@@ -3,13 +3,15 @@ const { v4: uuidv4 } = require("uuid");
 
 
 async function createByUserId(userId) {
+  console.log(userId)
   let newSession;
   const token = uuidv4();
 
   try {
     const result = await connection.query('INSERT INTO sessions ("userId", token) VALUES ($1, $2) RETURNING *', [userId, token]);
 
-    newSession = result.rows[0];    
+    newSession = result.rows[0]; 
+    
 
   } catch(error){
     console.log(error);

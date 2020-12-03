@@ -18,7 +18,7 @@ async function create(userParams) {
       console.log(error);
     }
   
-  }
+}
 
 async function isEmailUnique(email) {
 

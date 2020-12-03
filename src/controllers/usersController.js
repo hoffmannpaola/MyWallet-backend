@@ -42,7 +42,6 @@ async function postSignIn(req, res) {
    
 }
 
-
 function getUserData(user) {
     const { username, email, password } = user;
 
@@ -54,10 +53,7 @@ function getUserData(user) {
 }
 
 
-
-
-
 module.exports = {
     postSignUp,
     postSignIn
-  };
+};

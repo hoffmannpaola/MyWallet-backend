@@ -2,6 +2,7 @@
 //const usersRepository = require("../repositories/usersRepository");
 
 async function authMiddleware(req, res, next) {
+    console.log(req.body)
     const authHeader = req.header('Authorization');
     if (!authHeader) return res.status(401).send({ error: 'Auth header not found' });
 
