@@ -1,19 +1,23 @@
-
-//const usersRepository = require("../repositories/usersRepository");
+const sessionsRepository = require("../repositories/sessionsRepository");
+const usersRepository = require("../repositories/usersRepository");
 
 async function authMiddleware(req, res, next) {
-    console.log(req.body)
     const authHeader = req.header('Authorization');
     if (!authHeader) return res.status(401).send({ error: 'Auth header not found' });
 
     const token = authHeader.replace('Bearer ', '');
+    const session = await sessionsRepository.findByToken(token);
+    
+    if (session.length === 0) return res.status(401).send({ error: 'Invalid token' });
 
-    const user = await usersRepository.findById(session.userId);
+    const user = await sessionsRepository.findByToken(
+       token
+    );
     
     if (!user) return res.status(401).json({ error: 'Invalid token' });
   
     req.user = user;
-    req.token = token;
+    req.session = session;
   
     next();
 }

@@ -17,7 +17,25 @@ async function findFinancesByUser(id) {
 
 }
 
+async function create(registry) {
+    const { idUser, date, description, value, type } = registry;
+
+    let newRegistry;
+
+    try {
+        const result = await connection.query('INSERT INTO finances ("idUser", date, description, value, type) VALUES ($1, $2, $3, $4, $5) RETURNING *', [idUser, date, description, value, type]);
+
+        newRegistry = result.rows[0]
+
+    } catch(error) {
+        console.log(error);
+    }
+
+    return newRegistry;
+}
+
 module.exports = {
-    findFinancesByUser
+    findFinancesByUser,
+    create
 
 };
