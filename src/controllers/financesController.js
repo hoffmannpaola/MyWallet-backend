@@ -15,28 +15,17 @@ async function getFinances(req, res) {
     if (!user) return res.status(401).send({ error: "Usuário não encontrado!" });
 
     const finances = await financesRepository.findFinancesByUser(user.userId);
+    const financesLimited = finances.slice(0, 9);
+    console.log(financesLimited);
   
     return res.send(finances).status(200);
 
 }
 
-// {
-//     title,
-//     coverUrl,
-//     content,
-//   },
-//   {
-//     headers: {
-//       Authorization: `Bearer ${user.token}`,
-//     },
-//   },
-// )
 
 async function postRegistry(req, res) {
     const postParams = req.body;
     const {value, description, type} = postParams;
-
-    console.log(req.user.userId);
 
     const newRegistry =  financesRepository.create({
         idUser: req.user.userId,
