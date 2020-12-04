@@ -6,13 +6,12 @@ async function authMiddleware(req, res, next) {
     if (!authHeader) return res.status(401).send({ error: 'Auth header not found' });
 
     const token = authHeader.replace('Bearer ', '');
+    
     const session = await sessionsRepository.findByToken(token);
     
     if (session.length === 0) return res.status(401).send({ error: 'Invalid token' });
 
-    const user = await sessionsRepository.findByToken(
-       token
-    );
+    const user = await sessionsRepository.findByToken( token );
     
     if (!user) return res.status(401).json({ error: 'Invalid token' });
   

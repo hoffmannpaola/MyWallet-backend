@@ -38,10 +38,10 @@ async function findByToken(token) {
   return session;
 }
 
-async function destroyByUserId(userId) {
+async function destroyByUserToken(token) {
   
   try {
-      const result = await connection.query('DELETE FROM sessions WHERE "userId"=$1', [userId]);
+      await connection.query('DELETE FROM sessions WHERE token=$1', [token]);
 
   } catch(error) {
     console.log(error);
@@ -52,5 +52,5 @@ async function destroyByUserId(userId) {
 module.exports = { 
     createByUserId, 
     findByToken, 
-    destroyByUserId 
+    destroyByUserToken 
 };

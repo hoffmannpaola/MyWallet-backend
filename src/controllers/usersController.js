@@ -42,6 +42,14 @@ async function postSignIn(req, res) {
    
 }
 
+async function postSignOut(req, res) {
+
+    await sessionsRepository.destroyByUserToken(req.session.token);
+    return res.sendStatus(200);
+
+}
+
+
 function getUserData(user) {
     const { username, email, password } = user;
 
@@ -55,5 +63,6 @@ function getUserData(user) {
 
 module.exports = {
     postSignUp,
-    postSignIn
+    postSignIn,
+    postSignOut
 };
